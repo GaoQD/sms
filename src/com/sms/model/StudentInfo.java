@@ -9,7 +9,7 @@ public class StudentInfo {
 	private String sno;
 	private String name;
 	private String password;
-	private String sex = "ÄÐ";// default
+	private String sex = "ç”·";// default
 	private String email;
 	private String mobile;
 	private InputStream photo;
