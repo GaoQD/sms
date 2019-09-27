@@ -111,6 +111,40 @@ public class TeacherDao extends BaseDao {
 	}
 	
 	/**
+	 * 获取教师列表的条数
+	 *
+	 * @date 2019年9月27日  
+	 * @方法名: getTeacherListNum
+	 * @param teacherInfo
+	 * @return
+	 */
+	public int getTeacherListNum(TeacherInfo teacherInfo) {
+		int num = 0;
+		String sql = "select count(*) as num from user_teacher ";
+
+		if (!StringUtil.isEmpty(teacherInfo.getName())) {
+			sql += "and name like '%" + teacherInfo.getName() + "%' ";
+		}
+		if (teacherInfo.getClassID() != 0) {
+			sql += "and classID = " + teacherInfo.getClassID();
+		}
+		if (teacherInfo.getId() != 0) {
+			sql += " and id = " + teacherInfo.getId();// 约束用户权限
+		}
+
+		try (ResultSet resultSet = query(sql.replaceFirst("and", "where"))) {
+			while (resultSet.next()) {
+				num = resultSet.getInt("num");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return num;
+	}
+	
+	
+	/**
 	 * 更新教师信息
 	 *
 	 * @date 2019年9月26日  
